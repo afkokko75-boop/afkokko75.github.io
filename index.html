@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายรับ–รายจ่ายในโรงเรียน</title>
+    <!-- Google Font - Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+        .active-tab {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .active-tab-mobile {
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col pb-20 md:pb-0">
+
+    <!-- Top Header -->
+    <header class="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('home')">
+                <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
+                    <i data-lucide="wallet" class="w-7 h-7 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">รายรับ–รายจ่ายในโรงเรียน</h1>
+                    <p class="text-xs text-indigo-100">ผู้จัดทำ: ด.ช. ธุววิช บุญฤทธิการ เลขที่ 7</p>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-1 bg-white/10 p-1 rounded-xl backdrop-blur-md">
+                <button onclick="showPage('home')" id="nav-d-home" class="px-3 py-1.5 text-sm rounded-lg hover:bg-white/20 transition flex items-center gap-1.5"><i data-lucide="home" class="w-4 h-4"></i> หน้าแรก</button>
+                <button onclick="showPage('summary')" id="nav-d-summary" class="px-3 py-1.5 text-sm rounded-lg hover:bg-white/20 transition flex items-center gap-1.5"><i data-lucide="pie-chart" class="w-4 h-4"></i> สรุปผล</button>
+                <button onclick="showPage('income')" id="nav-d-income" class="px-3 py-1.5 text-sm rounded-lg hover:bg-white/20 transition flex items-center gap-1.5"><i data-lucide="plus-circle" class="w-4 h-4"></i> เพิ่มรายรับ</button>
+                <button onclick="showPage('expense')" id="nav-d-expense" class="px-3 py-1.5 text-sm rounded-lg hover:bg-white/20 transition flex items-center gap-1.5"><i data-lucide="minus-circle" class="w-4 h-4"></i> เพิ่มรายจ่าย</button>
+                <button onclick="showPage('history')" id="nav-d-history" class="px-3 py-1.5 text-sm rounded-lg hover:bg-white/20 transition flex items-center gap-1.5"><i data-lucide="history" class="w-4 h-4"></i> ประวัติ</button>
+                <button onclick="showPage('tips')" id="nav-d-tips" class="px-3 py-1.5 text-sm rounded-lg hover:bg-white/20 transition flex items-center gap-1.5"><i data-lucide="lightbulb" class="w-4 h-4"></i> ออมเงิน</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl w-full mx-auto p-4 flex-grow">
+
+        <!-- 1. หน้าแรก (Home) -->
+        <section id="page-home" class="space-y-6">
+            <div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 rounded-3xl p-6 md:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                    <i data-lucide="piggy-bank" class="w-80 h-80"></i>
+                </div>
+                <div class="relative z-10 max-w-xl">
+                    <span class="inline-block bg-white/20 text-xs px-3 py-1 rounded-full backdrop-blur-md mb-3">แอปพลิเคชันเพื่อการเรียนรู้</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-2">รายรับ–รายจ่ายในโรงเรียน</h2>
+                    <p class="text-indigo-100 text-sm md:text-base mb-6">วางแผนการใช้เงินอย่างชาญฉลาด บันทึกรายรับ-รายจ่ายประจำวัน เพื่อสร้างวินัยทางการเงินตั้งแต่วัยเรียน</p>
+                    
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-6 inline-block border border-white/20">
+                        <p class="text-xs text-indigo-200">ผู้จัดทำโครงงาน:</p>
+                        <p class="font-semibold text-base">ด.ช. ธุววิช บุญฤทธิการ <span class="bg-yellow-400 text-slate-900 text-xs px-2 py-0.5 rounded-full ml-1 font-bold">เลขที่ 7</span></p>
+                    </div>
+
+                    <div>
+                        <button onclick="showPage('income')" class="bg-white text-indigo-600 hover:bg-slate-100 font-bold px-6 py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition flex items-center gap-2 transform active:scale-95">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-indigo-600"></i> เริ่มบันทึกข้อมูล
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Cards Menu -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div onclick="showPage('income')" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center group">
+                    <div class="bg-emerald-100 p-3 rounded-2xl text-emerald-600 group-hover:scale-110 transition mb-3">
+                        <i data-lucide="trending-up" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700">เพิ่มรายรับ</h3>
+                    <p class="text-xs text-slate-400 mt-1">เงินค่าขนม, เงินพิเศษ</p>
+                </div>
+                <div onclick="showPage('expense')" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center group">
+                    <div class="bg-rose-100 p-3 rounded-2xl text-rose-600 group-hover:scale-110 transition mb-3">
+                        <i data-lucide="trending-down" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700">เพิ่มรายจ่าย</h3>
+                    <p class="text-xs text-slate-400 mt-1">ค่าอาหาร, ขนม, อุปกรณ์</p>
+                </div>
+                <div onclick="showPage('summary')" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center group">
+                    <div class="bg-purple-100 p-3 rounded-2xl text-purple-600 group-hover:scale-110 transition mb-3">
+                        <i data-lucide="pie-chart" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700">สรุปภาพรวม</h3>
+                    <p class="text-xs text-slate-400 mt-1">ดูยอดเงินคงเหลือ & กราฟ</p>
+                </div>
+                <div onclick="showPage('tips')" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center group">
+                    <div class="bg-amber-100 p-3 rounded-2xl text-amber-600 group-hover:scale-110 transition mb-3">
+                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700">เทคนิคการออม</h3>
+                    <p class="text-xs text-slate-400 mt-1">ข้อคิดออมเงินวัยเรียน</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. หน้าเพิ่มรายรับ (Income) -->
+        <section id="page-income" class="hidden max-w-lg mx-auto">
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-emerald-100 text-emerald-600 p-3 rounded-2xl">
+                        <i data-lucide="plus-circle" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">บันทึกรายรับ</h2>
+                        <p class="text-xs text-slate-400">กรอกข้อมูลเงินที่ได้รับเข้ามา</p>
+                    </div>
+                </div>
+
+                <form id="income-form" onsubmit="handleFormSubmit(event, 'income')" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">วันที่</label>
+                        <input type="date" id="income-date" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">รายการรายรับ</label>
+                        <input type="text" id="income-title" placeholder="เช่น เงินค่าขนม, เงินที่ได้รับจากผู้ปกครอง, เงินพิเศษ" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">จำนวนเงิน (บาท)</label>
+                        <input type="number" step="0.01" min="0.01" id="income-amount" placeholder="0.00" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-lg font-semibold text-emerald-600">
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl shadow-md hover:shadow-lg transition flex justify-center items-center gap-2 text-base active:scale-98">
+                        <i data-lucide="save" class="w-5 h-5"></i> บันทึกรายรับ
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 3. หน้าเพิ่มรายจ่าย (Expense) -->
+        <section id="page-expense" class="hidden max-w-lg mx-auto">
+            <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-rose-100 text-rose-600 p-3 rounded-2xl">
+                        <i data-lucide="minus-circle" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">บันทึกรายจ่าย</h2>
+                        <p class="text-xs text-slate-400">กรอกข้อมูลเงินที่ใช้จ่ายไป</p>
+                    </div>
+                </div>
+
+                <form id="expense-form" onsubmit="handleFormSubmit(event, 'expense')" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">วันที่</label>
+                        <input type="date" id="expense-date" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 bg-slate-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">รายการรายจ่าย</label>
+                        <input type="text" id="expense-title" placeholder="เช่น ข้าวกลางวัน, สมุดวาดเขียน" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">หมวดหมู่</label>
+                        <select id="expense-category" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 bg-white">
+                            <option value="อาหาร">🍜 อาหาร</option>
+                            <option value="ขนม">🍪 ขนม</option>
+                            <option value="เครื่องดื่ม">🧃 เครื่องดื่ม</option>
+                            <option value="อุปกรณ์การเรียน">✏️ อุปกรณ์การเรียน</option>
+                            <option value="ค่าเดินทาง">🚌 ค่าเดินทาง</option>
+                            <option value="อื่น ๆ">✨ อื่น ๆ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">จำนวนเงิน (บาท)</label>
+                        <input type="number" step="0.01" min="0.01" id="expense-amount" placeholder="0.00" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 text-lg font-semibold text-rose-600">
+                    </div>
+
+                    <button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3.5 rounded-xl shadow-md hover:shadow-lg transition flex justify-center items-center gap-2 text-base active:scale-98">
+                        <i data-lucide="save" class="w-5 h-5"></i> บันทึกรายจ่าย
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 4. หน้าสรุป (Summary) -->
+        <section id="page-summary" class="hidden space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-6 h-6 text-purple-600"></i> สรุปภาพรวมทางการเงิน
+            </h2>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-emerald-600 mb-2">
+                        <span class="text-xs font-medium text-slate-500">รายรับทั้งหมด</span>
+                        <div class="bg-emerald-50 p-2 rounded-xl"><i data-lucide="arrow-down-left" class="w-4 h-4"></i></div>
+                    </div>
+                    <div id="summary-total-income" class="text-2xl font-bold text-emerald-600">0.00 ฿</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-rose-600 mb-2">
+                        <span class="text-xs font-medium text-slate-500">รายจ่ายทั้งหมด</span>
+                        <div class="bg-rose-50 p-2 rounded-xl"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></div>
+                    </div>
+                    <div id="summary-total-expense" class="text-2xl font-bold text-rose-600">0.00 ฿</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-indigo-600 mb-2">
+                        <span class="text-xs font-medium text-slate-500">เงินคงเหลือ</span>
+                        <div class="bg-indigo-50 p-2 rounded-xl"><i data-lucide="scale" class="w-4 h-4"></i></div>
+                    </div>
+                    <div id="summary-balance" class="text-2xl font-bold text-indigo-600">0.00 ฿</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-purple-600 mb-2">
+                        <span class="text-xs font-medium text-slate-500">จำนวนรายการ</span>
+                        <div class="bg-purple-50 p-2 rounded-xl"><i data-lucide="list" class="w-4 h-4"></i></div>
+                    </div>
+                    <div id="summary-count" class="text-2xl font-bold text-purple-600">0 รายการ</div>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2">
+                    <i data-lucide="donut" class="w-5 h-5 text-indigo-500"></i> สัดส่วนรายจ่ายแยกตามหมวดหมู่
+                </h3>
+                <div class="relative max-w-xs mx-auto aspect-square flex items-center justify-center">
+                    <canvas id="expenseChart"></canvas>
+                    <p id="no-chart-data" class="hidden text-slate-400 text-sm">ยังไม่มีข้อมูลรายจ่าย</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. หน้าประวัติ (History) -->
+        <section id="page-history" class="hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="history" class="w-6 h-6 text-purple-600"></i> ประวัติรายการทั้งหมด
+                </h2>
+                <button onclick="resetData()" class="text-xs text-rose-500 hover:text-rose-700 flex items-center gap-1 bg-rose-50 px-3 py-1.5 rounded-lg">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> ล้างข้อมูลตัวอย่าง
+                </button>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase text-xs">
+                            <tr>
+                                <th class="p-4">วันที่</th>
+                                <th class="p-4">รายการ</th>
+                                <th class="p-4">ประเภท</th>
+                                <th class="p-4">หมวดหมู่</th>
+                                <th class="p-4 text-right">จำนวนเงิน</th>
+                                <th class="p-4 text-center">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-slate-100 text-slate-700">
+                            <!-- JS Will Render Here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="empty-history" class="hidden p-8 text-center text-slate-400">
+                    <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-2 stroke-1"></i>
+                    <p>ยังไม่มีรายการถูกบันทึก</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. หน้าแนะนำการออม (Savings Tips) -->
+        <section id="page-tips" class="hidden space-y-6">
+            <div class="bg-gradient-to-r from-amber-400 to-orange-400 rounded-3xl p-6 text-white shadow-md">
+                <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+                    <i data-lucide="lightbulb" class="w-7 h-7"></i> เทคนิคการออมเงินฉบับวัยเรียน
+                </h2>
+                <p class="text-amber-100 text-sm">จุดเริ่มต้นเล็ก ๆ สู่เป้าหมายทางการเงินที่ยิ่งใหญ่!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-start">
+                    <div class="bg-indigo-100 text-indigo-600 p-3 rounded-2xl shrink-0">
+                        <i data-lucide="piggy-bank" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">1. แบ่งเงินก่อนใช้</h3>
+                        <p class="text-sm text-slate-500">เมื่อได้รับเงินค่าขนมจา
