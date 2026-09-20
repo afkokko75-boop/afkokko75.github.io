@@ -299,4 +299,363 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-800 mb-1">1. แบ่งเงินก่อนใช้</h3>
-                        <p class="text-sm text-slate-500">เมื่อได้รับเงินค่าขนมจา
+                        <p class="text-sm text-slate-500">เมื่อได้รับเงินค่าขนมจากผู้ปกครอง ให้แบ่งเงินไว้หยอดกระปุกออมสินทันที 10-20% ก่อนจะนำเงินไปซื้อของ</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-start">
+                    <div class="bg-emerald-100 text-emerald-600 p-3 rounded-2xl shrink-0">
+                        <i data-lucide="notebook-pen" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">2. จดรายจ่ายทุกครั้ง</h3>
+                        <p class="text-sm text-slate-500">บันทึกรายการใช้จ่ายผ่านเว็บแอปนี้ทุกวัน เพื่อให้รู้ว่าในแต่ละวันเราหมดเงินไปกับอะไรมากที่สุด</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-start">
+                    <div class="bg-rose-100 text-rose-600 p-3 rounded-2xl shrink-0">
+                        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">3. ลดการซื้อของที่ไม่จำเป็น</h3>
+                        <p class="text-sm text-slate-500">แยกแยะระหว่าง "ความจำเป็น" (Need) กับ "ความอยากได้" (Want) เช่น ขนมขบเคี้ยว หรือของเล่นที่ไม่จำเป็น</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-start">
+                    <div class="bg-amber-100 text-amber-600 p-3 rounded-2xl shrink-0">
+                        <i data-lucide="target" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-1">4. ตั้งเป้าหมายการเก็บเงิน</h3>
+                        <p class="text-sm text-slate-500">การมีเป้าหมายที่ชัดเจน เช่น ออมเงินซื้ออุปกรณ์การเรียนที่อยากได้ จะช่วยสร้างแรงจูงใจในการออมได้ดีขึ้น</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Mobile) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 px-2 py-2 z-50 flex justify-around">
+        <button onclick="showPage('home')" id="nav-m-home" class="flex flex-col items-center p-2 rounded-xl text-slate-500 text-xs w-16">
+            <i data-lucide="home" class="w-5 h-5 mb-0.5"></i> หน้าแรก
+        </button>
+        <button onclick="showPage('income')" id="nav-m-income" class="flex flex-col items-center p-2 rounded-xl text-slate-500 text-xs w-16">
+            <i data-lucide="plus-circle" class="w-5 h-5 mb-0.5"></i> รายรับ
+        </button>
+        <button onclick="showPage('expense')" id="nav-m-expense" class="flex flex-col items-center p-2 rounded-xl text-slate-500 text-xs w-16">
+            <i data-lucide="minus-circle" class="w-5 h-5 mb-0.5"></i> รายจ่าย
+        </button>
+        <button onclick="showPage('summary')" id="nav-m-summary" class="flex flex-col items-center p-2 rounded-xl text-slate-500 text-xs w-16">
+            <i data-lucide="pie-chart" class="w-5 h-5 mb-0.5"></i> สรุป
+        </button>
+        <button onclick="showPage('history')" id="nav-m-history" class="flex flex-col items-center p-2 rounded-xl text-slate-500 text-xs w-16">
+            <i data-lucide="history" class="w-5 h-5 mb-0.5"></i> ประวัติ
+        </button>
+        <button onclick="showPage('tips')" id="nav-m-tips" class="flex flex-col items-center p-2 rounded-xl text-slate-500 text-xs w-16">
+            <i data-lucide="lightbulb" class="w-5 h-5 mb-0.5"></i> ออมเงิน
+        </button>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Sample Initial Data
+        const sampleTransactions = [
+            { id: 1, date: getTodayString(), title: 'เงินค่าขนมประจำวัน', type: 'income', category: 'รายรับ', amount: 100 },
+            { id: 2, date: getTodayString(), title: 'ข้าวผัดกะเพราไข่ดาว', type: 'expense', category: 'อาหาร', amount: 45 },
+            { id: 3, date: getTodayString(), title: 'น้ำอัดลม', type: 'expense', category: 'เครื่องดื่ม', amount: 15 },
+            { id: 4, date: getTodayString(), title: 'สมุดวาดเขียน', type: 'expense', category: 'อุปกรณ์การเรียน', amount: 20 },
+            { id: 5, date: getTodayString(), title: 'ขนมกรุบกรอบ', type: 'expense', category: 'ขนม', amount: 10 }
+        ];
+
+        // Global State
+        let transactions = JSON.parse(localStorage.getItem('school_transactions')) || sampleTransactions;
+        let chartInstance = null;
+
+        // Init App
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            setDefaultDates();
+            renderAll();
+            showPage('home');
+        });
+
+        // Get Today Date Format YYYY-MM-DD
+        function getTodayString() {
+            const today = new Date();
+            return today.toISOString().split('T')[0];
+        }
+
+        // Set default dates to input elements
+        function setDefaultDates() {
+            document.getElementById('income-date').value = getTodayString();
+            document.getElementById('expense-date').value = getTodayString();
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            const pages = ['home', 'income', 'expense', 'summary', 'history', 'tips'];
+            pages.forEach(p => {
+                document.getElementById(`page-${p}`).classList.add('hidden');
+                
+                // Desktop nav status
+                const navD = document.getElementById(`nav-d-${p}`);
+                if (navD) {
+                    if (p === pageId) navD.classList.add('bg-white/20', 'font-bold');
+                    else navD.classList.remove('bg-white/20', 'font-bold');
+                }
+
+                // Mobile nav status
+                const navM = document.getElementById(`nav-m-${p}`);
+                if (navM) {
+                    if (p === pageId) navM.classList.add('active-tab-mobile');
+                    else navM.classList.remove('active-tab-mobile');
+                }
+            });
+
+            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (pageId === 'summary') {
+                renderChart();
+            }
+        }
+
+        // Handle Form Submit
+        function handleFormSubmit(e, type) {
+            e.preventDefault();
+            
+            if (type === 'income') {
+                const date = document.getElementById('income-date').value;
+                const title = document.getElementById('income-title').value.trim();
+                const amount = parseFloat(document.getElementById('income-amount').value);
+
+                if (!date || !title || isNaN(amount)) return;
+
+                const newTransaction = {
+                    id: Date.now(),
+                    date,
+                    title,
+                    type: 'income',
+                    category: 'รายรับ',
+                    amount
+                };
+
+                transactions.unshift(newTransaction);
+                document.getElementById('income-form').reset();
+                setDefaultDates();
+                alert('บันทึกรายรับเรียบร้อยแล้ว!');
+            } else if (type === 'expense') {
+                const date = document.getElementById('expense-date').value;
+                const title = document.getElementById('expense-title').value.trim();
+                const category = document.getElementById('expense-category').value;
+                const amount = parseFloat(document.getElementById('expense-amount').value);
+
+                if (!date || !title || !category || isNaN(amount)) return;
+
+                const newTransaction = {
+                    id: Date.now(),
+                    date,
+                    title,
+                    type: 'expense',
+                    category,
+                    amount
+                };
+
+                transactions.unshift(newTransaction);
+                document.getElementById('expense-form').reset();
+                setDefaultDates();
+                alert('บันทึกรายจ่ายเรียบร้อยแล้ว!');
+            }
+
+            saveAndRender();
+            showPage('summary');
+        }
+
+        // Delete Item
+        function deleteTransaction(id) {
+            if (confirm('คุณต้องการลบรายการนี้ใช่หรือไม่?')) {
+                transactions = transactions.filter(item => item.id !== id);
+                saveAndRender();
+            }
+        }
+
+        // Reset to initial sample data
+        function resetData() {
+            if (confirm('ต้องการรีเซ็ตกลับเป็นข้อมูลตัวอย่างหรือไม่?')) {
+                transactions = [...sampleTransactions];
+                saveAndRender();
+            }
+        }
+
+        // Save to Storage & Update Views
+        function saveAndRender() {
+            localStorage.setItem('school_transactions', JSON.stringify(transactions));
+            renderAll();
+        }
+
+        function renderAll() {
+            renderSummary();
+            renderHistory();
+            if (!document.getElementById('page-summary').classList.contains('hidden')) {
+                renderChart();
+            }
+        }
+
+        // Render Summary Numbers
+        function renderSummary() {
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            transactions.forEach(t => {
+                if (t.type === 'income') totalIncome += t.amount;
+                else if (t.type === 'expense') totalExpense += t.amount;
+            });
+
+            const balance = totalIncome - totalExpense;
+
+            document.getElementById('summary-total-income').innerText = totalIncome.toLocaleString('th-TH', { minimumFractionDigits: 2 }) + ' ฿';
+            document.getElementById('summary-total-expense').innerText = totalExpense.toLocaleString('th-TH', { minimumFractionDigits: 2 }) + ' ฿';
+            
+            const balanceEl = document.getElementById('summary-balance');
+            balanceEl.innerText = balance.toLocaleString('th-TH', { minimumFractionDigits: 2 }) + ' ฿';
+            
+            if (balance < 0) {
+                balanceEl.className = 'text-2xl font-bold text-rose-600';
+            } else {
+                balanceEl.className = 'text-2xl font-bold text-indigo-600';
+            }
+
+            document.getElementById('summary-count').innerText = transactions.length + ' รายการ';
+        }
+
+        // Render Pie Chart
+        function renderChart() {
+            const categories = ['อาหาร', 'ขนม', 'เครื่องดื่ม', 'อุปกรณ์การเรียน', 'ค่าเดินทาง', 'อื่น ๆ'];
+            const categoryTotals = categories.map(cat => {
+                return transactions
+                    .filter(t => t.type === 'expense' && t.category === cat)
+                    .reduce((sum, t) => sum + t.amount, 0);
+            });
+
+            const hasExpenseData = categoryTotals.some(val => val > 0);
+            const canvas = document.getElementById('expenseChart');
+            const noDataEl = document.getElementById('no-chart-data');
+
+            if (!hasExpenseData) {
+                canvas.classList.add('hidden');
+                noDataEl.classList.remove('hidden');
+                if (chartInstance) chartInstance.destroy();
+                return;
+            }
+
+            canvas.classList.remove('hidden');
+            noDataEl.classList.add('hidden');
+
+            const ctx = canvas.getContext('2d');
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        data: categoryTotals,
+                        backgroundColor: [
+                            '#f87171', // อาหาร - red
+                            '#fb923c', // ขนม - orange
+                            '#facc15', // เครื่องดื่ม - yellow
+                            '#60a5fa', // อุปกรณ์การเรียน - blue
+                            '#a78bfa', // ค่าเดินทาง - purple
+                            '#9ca3af'  // อื่น ๆ - gray
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Prompt'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render History Table
+        function renderHistory() {
+            const tbody = document.getElementById('history-table-body');
+            const emptyEl = document.getElementById('empty-history');
+
+            tbody.innerHTML = '';
+
+            if (transactions.length === 0) {
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+
+            emptyEl.classList.add('hidden');
+
+            transactions.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/50 transition';
+
+                const isIncome = item.type === 'income';
+                const badgeClass = isIncome ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700';
+                const amountClass = isIncome ? 'text-emerald-600 font-semibold' : 'text-rose-600 font-semibold';
+                const amountPrefix = isIncome ? '+' : '-';
+
+                tr.innerHTML = `
+                    <td class="p-4 whitespace-nowrap text-slate-500 text-xs">${formatDate(item.date)}</td>
+                    <td class="p-4 font-medium text-slate-800">${escapeHtml(item.title)}</td>
+                    <td class="p-4 whitespace-nowrap">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-medium ${badgeClass}">
+                            ${isIncome ? 'รายรับ' : 'รายจ่าย'}
+                        </span>
+                    </td>
+                    <td class="p-4 whitespace-nowrap text-slate-500 text-xs">${escapeHtml(item.category)}</td>
+                    <td class="p-4 text-right whitespace-nowrap ${amountClass}">
+                        ${amountPrefix}${item.amount.toLocaleString('th-TH', { minimumFractionDigits: 2 })} ฿
+                    </td>
+                    <td class="p-4 text-center whitespace-nowrap">
+                        <button onclick="deleteTransaction(${item.id})" class="text-slate-400 hover:text-rose-500 p-1 rounded-lg transition">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Helper: Format Date String (YYYY-MM-DD to TH)
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            return `${parts[2]}/${parts[1]}/${parseInt(parts[0]) + 543}`;
+        }
+
+        // Helper: Sanitize Text
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
